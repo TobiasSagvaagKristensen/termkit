@@ -1,0 +1,8 @@
+id,name,description,level_min,level_max,encounters
+route_1,Route 1,A quiet path through tall grass. Perfect for beginners.,3,6,19:40|16:40|10:20
+viridian_forest,Viridian Forest,A dense forest teeming with bug Pokemon.,4,8,10:30|13:30|21:10|11:15|14:15
+route_2,Route 2,A winding road with diverse wild Pokemon.,7,12,23:30|29:25|31:15|16:20|19:10
+mt_moon,Mt. Moon,A dark cave filled with rock and poison types.,10,16,27:30|25:30|40:10|23:20|10:10
+route_3,Route 3,An open plain where fighting and electric types roam.,14,20,33:30|35:25|29:20|20:15|17:10
+power_plant,Power Plant,An abandoned facility crackling with electricity.,18,25,37:30|35:25|21:20|38:15|36:10
+victory_road,Victory Road,A treacherous path only the strong survive.,25,35,26:25|39:20|28:20|34:15|24:10|17:10

@@ -1,0 +1,8 @@
+id,name,category,effect,value,price,description
+potion,Potion,healing,hp,20,200,Restores 20 HP to one Pokemon
+super_potion,Super Potion,healing,hp,50,700,Restores 50 HP to one Pokemon
+hyper_potion,Hyper Potion,healing,hp,120,1500,Restores 120 HP to one Pokemon
+revive,Revive,healing,revive,0.5,2000,Revives a fainted Pokemon to half HP
+pokeball,Poke Ball,capture,catch_rate,1.0,200,A standard ball for catching Pokemon
+great_ball,Great Ball,capture,catch_rate,1.5,600,A better ball with a higher catch rate
+ultra_ball,Ultra Ball,capture,catch_rate,2.0,1200,A high-performance ball

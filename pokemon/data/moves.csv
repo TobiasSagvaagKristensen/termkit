@@ -1,0 +1,51 @@
+id,name,type,category,power,accuracy,pp,description
+tackle,Tackle,normal,physical,40,100,35,A full-body charge attack
+scratch,Scratch,normal,physical,40,100,35,Scratches with sharp claws
+pound,Pound,normal,physical,40,100,35,Pounds the foe with forelegs
+growl,Growl,normal,status,0,100,40,Reduces the foe's Attack
+tail_whip,Tail Whip,normal,status,0,100,30,Lowers the foe's Defense
+leer,Leer,normal,status,0,100,30,Reduces the foe's Defense
+quick_attack,Quick Attack,normal,physical,40,100,30,An extremely fast attack
+hyper_fang,Hyper Fang,normal,physical,80,90,15,Attacks with sharp fangs
+slam,Slam,normal,physical,80,75,20,Slams the foe with a tail or vine
+body_slam,Body Slam,normal,physical,85,100,15,A full-body slam attack
+ember,Ember,fire,special,40,100,25,A small flame attack
+flamethrower,Flamethrower,fire,special,90,100,15,A powerful stream of fire
+fire_spin,Fire Spin,fire,special,35,85,15,Traps the foe in a ring of fire
+fire_blast,Fire Blast,fire,special,110,85,5,An intense blast of fire
+water_gun,Water Gun,water,special,40,100,25,Squirts water at the foe
+bubble,Bubble,water,special,40,100,30,Sprays bubbles at the foe
+bite,Bite,normal,physical,60,100,25,Bites with sharp fangs
+water_pulse,Water Pulse,water,special,60,100,20,An ultrasonic wave of water
+hydro_pump,Hydro Pump,water,special,110,80,5,A powerful blast of water
+vine_whip,Vine Whip,grass,physical,45,100,25,Strikes with slender vines
+razor_leaf,Razor Leaf,grass,physical,55,95,25,Cuts with sharp leaves
+solar_beam,Solar Beam,grass,special,120,100,10,A powerful beam of light
+gust,Gust,flying,special,40,100,35,Whips up a strong gust of wind
+wing_attack,Wing Attack,flying,physical,60,100,35,Strikes with spread wings
+sand_attack,Sand Attack,ground,status,0,100,15,Reduces the foe's accuracy
+poison_sting,Poison Sting,poison,physical,15,100,35,A toxic attack with barbs
+poison_powder,Poison Powder,poison,status,0,75,35,Scatters a toxic powder
+sleep_powder,Sleep Powder,grass,status,0,75,15,May cause the foe to sleep
+string_shot,String Shot,bug,status,0,95,40,Reduces the foe's Speed
+bug_bite,Bug Bite,bug,physical,60,100,20,Bites the foe with sharp mandibles
+confusion,Confusion,psychic,special,50,100,25,A weak psychic attack
+psybeam,Psybeam,psychic,special,65,100,20,Fires a beam of psychic energy
+thundershock,Thunder Shock,electric,special,40,100,30,An electric shock attack
+thunderbolt,Thunderbolt,electric,special,90,100,15,A powerful electric attack
+thunder,Thunder,electric,special,110,70,10,A devastating lightning bolt
+rock_throw,Rock Throw,rock,physical,50,90,15,Throws small rocks at the foe
+rock_slide,Rock Slide,rock,physical,75,90,10,Large boulders are hurled
+karate_chop,Karate Chop,fighting,physical,50,100,25,A chopping attack
+low_kick,Low Kick,fighting,physical,50,100,20,A low sweeping kick
+mega_punch,Mega Punch,normal,physical,80,85,20,A powerful punch attack
+mega_kick,Mega Kick,normal,physical,120,75,5,A powerful kick attack
+double_kick,Double Kick,fighting,physical,30,100,30,Kicks the foe twice in a row
+supersonic,Supersonic,normal,status,0,55,20,Emits a confusing supersonic wave
+absorb,Absorb,grass,special,20,100,25,Absorbs half the damage inflicted
+mega_drain,Mega Drain,grass,special,40,100,15,Absorbs half the damage inflicted
+leech_life,Leech Life,bug,physical,80,100,10,Drains the foe's blood
+metal_claw,Metal Claw,normal,physical,50,95,35,Rakes with steel claws
+sonic_boom,Sonic Boom,normal,special,0,90,20,Attacks with a destructive shockwave
+peck,Peck,flying,physical,35,100,35,Attacks with a jabbing beak
+drill_peck,Drill Peck,flying,physical,80,100,20,A spinning peck attack
