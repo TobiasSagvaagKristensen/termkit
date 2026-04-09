@@ -337,7 +337,7 @@ def render_encounter(wild_pokemon: Pokemon, sprite_db: dict[int, str] | None = N
 
     parts = [header]
     if sprite_db:
-        sprite = build_pokemon_sprite(wild_pokemon.species.id, sprite_db, width=48, height=24)
+        sprite = build_pokemon_sprite(wild_pokemon.species.id, sprite_db, width=72, height=36)
         if sprite:
             parts.append(sprite)
     parts.append(info)
@@ -450,7 +450,7 @@ def render_battle(battle: BattleState, state: GameState, item_db: dict[str, Item
 
     # Opponent sprite + info
     if sprite_db:
-        opp_sprite = build_pokemon_sprite(opp.species.id, sprite_db, width=48, height=24)
+        opp_sprite = build_pokemon_sprite(opp.species.id, sprite_db, width=72, height=36)
         if opp_sprite:
             group_parts.append(opp_sprite)
     opp_section = Text()
@@ -461,7 +461,7 @@ def render_battle(battle: BattleState, state: GameState, item_db: dict[str, Item
 
     # Player sprite + info
     if sprite_db:
-        plr_sprite = build_pokemon_sprite(plr.species.id, sprite_db, width=48, height=24)
+        plr_sprite = build_pokemon_sprite(plr.species.id, sprite_db, width=72, height=36)
         if plr_sprite:
             group_parts.append(plr_sprite)
     plr_section = Text()
@@ -559,7 +559,7 @@ def render_team(state: GameState, sprite_db: dict[int, str] | None = None) -> Pa
     group_parts = [content]
     if sprite_db and state.team:
         selected = state.team[state.team_selection]
-        sprite = build_pokemon_sprite(selected.species.id, sprite_db, width=48, height=24)
+        sprite = build_pokemon_sprite(selected.species.id, sprite_db, width=72, height=36)
         if sprite:
             preview_label = Text()
             preview_label.append("\n─── Preview ───\n", style=BORDER)
