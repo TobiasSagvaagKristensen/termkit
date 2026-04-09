@@ -154,7 +154,9 @@ class Pokemon:
                     events.append({"type": "new_move", "move_id": move_id})
 
             # Check for evolution (only once — stop leveling, defer to evolution screen)
+            # evolve_level == 0 means stone evolution (not auto)
             if (self.species.evolve_level is not None
+                    and self.species.evolve_level > 0
                     and self.level >= self.species.evolve_level):
                 events.append({
                     "type": "evolve",

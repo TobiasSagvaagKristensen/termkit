@@ -49,3 +49,6 @@ metal_claw,Metal Claw,normal,physical,50,95,35,Rakes with steel claws
 sonic_boom,Sonic Boom,normal,special,0,90,20,Attacks with a destructive shockwave
 peck,Peck,flying,physical,35,100,35,Attacks with a jabbing beak
 drill_peck,Drill Peck,flying,physical,80,100,20,A spinning peck attack
+acid,Acid,poison,special,40,100,30,Sprays a harsh acid
+slash,Slash,normal,physical,70,100,20,Slashes with sharp claws
+waterfall,Waterfall,water,physical,80,100,15,Charges up a waterfall

@@ -1,8 +1,13 @@
 id,name,description,level_min,level_max,encounters
-route_1,Route 1,A quiet path through tall grass. Perfect for beginners.,3,6,19:40|16:40|10:20
-viridian_forest,Viridian Forest,A dense forest teeming with bug Pokemon.,4,8,10:30|13:30|21:10|11:15|14:15
-route_2,Route 2,A winding road with diverse wild Pokemon.,7,12,23:30|29:25|31:15|16:20|19:10
-mt_moon,Mt. Moon,A dark cave filled with rock and poison types.,10,16,27:30|25:30|40:10|23:20|10:10
-route_3,Route 3,An open plain where fighting and electric types roam.,14,20,33:30|35:25|29:20|20:15|17:10
-power_plant,Power Plant,An abandoned facility crackling with electricity.,18,25,37:30|35:25|21:20|38:15|36:10
-victory_road,Victory Road,A treacherous path only the strong survive.,25,35,26:25|39:20|28:20|34:15|24:10|17:10
+route_1,Route 1,A quiet path through tall grass. Perfect for beginners.,3,6,19:35|16:35|10:15|29:10|32:5
+viridian_forest,Viridian Forest,A dense forest teeming with bug Pokemon.,4,8,10:25|13:25|16:15|25:5|46:15|48:15
+route_2,Route 2,A winding road with diverse wild Pokemon.,7,12,23:20|43:20|56:15|21:15|39:15|52:15
+mt_moon,Mt. Moon,A dark cave filled with rock and poison types.,10,16,41:25|74:25|35:10|104:15|92:15|50:10
+cerulean_cave,Cerulean Cave,A mysterious cave near the city. Water types thrive here.,12,18,54:25|60:20|72:15|98:15|86:15|116:10
+route_3,Route 3,An open plain where fighting and electric types roam.,14,20,66:25|81:20|69:15|77:15|58:15|84:10
+rock_tunnel,Rock Tunnel,A pitch-black tunnel carved through the mountain.,16,22,74:20|95:15|109:15|88:15|41:15|96:20
+safari_zone,Safari Zone,A nature reserve with rare and exotic Pokemon.,18,25,111:15|123:10|128:15|114:15|127:10|113:5|133:10|108:10|115:10
+power_plant,Power Plant,An abandoned facility crackling with electricity.,20,28,100:25|81:20|125:15|82:10|101:10|137:10|25:10
+seafoam_islands,Seafoam Islands,Icy caverns where powerful water Pokemon dwell.,22,30,86:20|90:15|116:15|120:15|131:10|87:10|117:15
+victory_road,Victory Road,A treacherous path only the strong survive.,28,38,75:15|67:15|42:15|105:15|112:10|142:10|130:10|24:10
+cerulean_cave_deep,Unknown Dungeon,The deepest part of the cave. Only legends dwell here.,40,55,64:15|94:15|149:5|132:15|143:5|65:10|68:10|76:10|130:15
