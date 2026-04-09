@@ -121,21 +121,20 @@ def load_zones() -> dict[str, Zone]:
     return zones
 
 
-def load_art() -> dict[int, str]:
-    """Load ASCII art for Pokemon, keyed by species id."""
-    art_dir = os.path.join(DATA_DIR, "art")
-    art = {}
-    if not os.path.isdir(art_dir):
-        return art
-    for filename in os.listdir(art_dir):
-        if filename.endswith(".txt"):
+def load_sprites() -> dict[int, str]:
+    """Load sprite file paths, keyed by species id."""
+    sprite_dir = os.path.join(DATA_DIR, "sprites")
+    sprites = {}
+    if not os.path.isdir(sprite_dir):
+        return sprites
+    for filename in os.listdir(sprite_dir):
+        if filename.endswith(".png"):
             try:
                 species_id = int(filename[:-4])
-                with open(os.path.join(art_dir, filename), encoding="utf-8") as f:
-                    art[species_id] = f.read().rstrip("\n")
+                sprites[species_id] = os.path.join(sprite_dir, filename)
             except (ValueError, OSError):
                 continue
-    return art
+    return sprites
 
 
 def load_all() -> tuple[dict[str, MoveTemplate], dict[int, Species],
@@ -146,5 +145,5 @@ def load_all() -> tuple[dict[str, MoveTemplate], dict[int, Species],
     species = load_species()
     items = load_items()
     zones = load_zones()
-    art = load_art()
-    return moves, species, items, zones, art
+    sprites = load_sprites()
+    return moves, species, items, zones, sprites

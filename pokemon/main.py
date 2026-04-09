@@ -40,7 +40,7 @@ MOVE_DB: dict = {}
 SPECIES_DB: dict = {}
 ITEM_DB: dict = {}
 ZONE_DB: dict = {}
-ART_DB: dict = {}
+SPRITE_DB: dict = {}
 
 STARTER_IDS = [1, 4, 7]  # Bulbasaur, Charmander, Squirtle
 STARTER_LEVEL = 5
@@ -433,7 +433,7 @@ def execute_ai_turn(state: GameState, live: Live) -> None:
 def show_battle_update(state: GameState, live: Live) -> None:
     """Update the display during battle and pause briefly."""
     console = live.console
-    panel = render_battle(state.battle, state, ITEM_DB, ART_DB)
+    panel = render_battle(state.battle, state, ITEM_DB, SPRITE_DB)
     display(live, console, panel)
     time.sleep(0.8)
 
@@ -652,9 +652,9 @@ def display(live: Live, console: Console, panel: Panel):
 
 
 def main():
-    global MOVE_DB, SPECIES_DB, ITEM_DB, ZONE_DB, ART_DB
+    global MOVE_DB, SPECIES_DB, ITEM_DB, ZONE_DB, SPRITE_DB
 
-    MOVE_DB, SPECIES_DB, ITEM_DB, ZONE_DB, ART_DB = load_all()
+    MOVE_DB, SPECIES_DB, ITEM_DB, ZONE_DB, SPRITE_DB = load_all()
 
     console = Console(force_terminal=True)
     state = GameState()
@@ -713,10 +713,10 @@ def main():
                                     SPECIES_DB, MOVE_DB,
                                 )
                                 if wild_pokemon:
-                                    display(live, console, render_encounter(wild_pokemon, ART_DB))
+                                    display(live, console, render_encounter(wild_pokemon, SPRITE_DB))
                                     time.sleep(1.5)
                     else:
-                        display(live, console, render_encounter(wild_pokemon, ART_DB))
+                        display(live, console, render_encounter(wild_pokemon, SPRITE_DB))
                         if key == "enter":
                             start_wild_battle(state, wild_pokemon)
                             wild_pokemon = None
@@ -738,7 +738,7 @@ def main():
                                 state.battle, xp_gain, money_gain
                             ))
                         else:
-                            display(live, console, render_battle(state.battle, state, ITEM_DB, ART_DB))
+                            display(live, console, render_battle(state.battle, state, ITEM_DB, SPRITE_DB))
                         if key:
                             handle_battle(state, key, live)
 
@@ -762,7 +762,7 @@ def main():
                         handle_evolution(state, key)
 
                 elif state.screen == Screen.TEAM:
-                    display(live, console, render_team(state, ART_DB))
+                    display(live, console, render_team(state, SPRITE_DB))
                     if key:
                         handle_team(state, key)
 

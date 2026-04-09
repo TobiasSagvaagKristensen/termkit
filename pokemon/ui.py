@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import select
 import sys
 import time
@@ -117,39 +118,20 @@ def read_key(timeout: float = 0.03):
 # ──────────────────────────────────────────────────────────
 
 
-def build_pokemon_art(species_id: int, art_db: dict[int, str],
-                      max_height: int = 12, max_width: int = 45) -> Text:
-    """Build a trimmed ASCII art renderable for a Pokemon."""
-    art_text = art_db.get(species_id, "")
-    if not art_text:
+def build_pokemon_sprite(species_id: int, sprite_db: dict[int, str],
+                         width: int = 24, height: int = 12):
+    """Render a Pokemon sprite as colored half-block characters."""
+    path = sprite_db.get(species_id)
+    if not path or not os.path.exists(path):
         return Text("")
 
-    lines = art_text.split("\n")
-
-    # Strip leading/trailing blank lines
-    while lines and not lines[0].strip():
-        lines.pop(0)
-    while lines and not lines[-1].strip():
-        lines.pop()
-
-    if not lines:
+    try:
+        from rich_pixels import Pixels
+        from PIL import Image
+        img = Image.open(path).convert("RGBA")
+        return Pixels.from_image(img, resize=(width, height))
+    except Exception:
         return Text("")
-
-    # If still too tall, sample evenly to preserve the shape
-    if len(lines) > max_height:
-        step = len(lines) / max_height
-        lines = [lines[int(i * step)] for i in range(max_height)]
-
-    # Find minimum leading whitespace to left-trim
-    min_indent = min((len(l) - len(l.lstrip()) for l in lines if l.strip()), default=0)
-
-    result = Text()
-    for line in lines:
-        trimmed = line[min_indent:]
-        if len(trimmed) > max_width:
-            trimmed = trimmed[:max_width]
-        result.append(trimmed + "\n", style=DIM)
-    return result
 
 
 def build_hp_bar(current: int, max_val: int, width: int = 20) -> Text:
@@ -337,36 +319,38 @@ def render_walking(zone: Zone, steps: int) -> Panel:
     )
 
 
-def render_encounter(wild_pokemon: Pokemon, art_db: dict[int, str] | None = None) -> Panel:
+def render_encounter(wild_pokemon: Pokemon, sprite_db: dict[int, str] | None = None) -> Panel:
     """Render wild Pokemon encounter screen."""
     content = Text()
-    content.append(f"\n  A wild ", style=WHITE)
-    content.append(f"{wild_pokemon.name}", style=f"bold {YELLOW}")
-    content.append(f" appeared!\n\n", style=WHITE)
+    header = Text()
+    header.append(f"\n  A wild ", style=WHITE)
+    header.append(f"{wild_pokemon.name}", style=f"bold {YELLOW}")
+    header.append(f" appeared!\n", style=WHITE)
 
-    # Show ASCII art
-    if art_db:
-        art = build_pokemon_art(wild_pokemon.species.id, art_db, max_height=10, max_width=45)
-        if art.plain.strip():
-            content.append_text(art)
-            content.append("\n")
+    info = Text()
+    info.append(f"  Lv.{wild_pokemon.level}  ", style=WHITE)
+    info.append_text(build_type_badges(wild_pokemon.species.type1, wild_pokemon.species.type2))
+    info.append("\n  HP: ", style=WHITE)
+    info.append_text(build_hp_bar(wild_pokemon.current_hp, wild_pokemon.max_hp))
+    info.append("\n\n")
+    info.append(f"  [ENTER] Fight  [ESC] Run", style=DIM)
 
-    content.append(f"  Lv.{wild_pokemon.level}  ", style=WHITE)
-    content.append_text(build_type_badges(wild_pokemon.species.type1, wild_pokemon.species.type2))
-    content.append("\n  HP: ", style=WHITE)
-    content.append_text(build_hp_bar(wild_pokemon.current_hp, wild_pokemon.max_hp))
-    content.append("\n\n")
-    content.append(f"  [ENTER] Fight  [ESC] Run", style=DIM)
+    parts = [header]
+    if sprite_db:
+        sprite = build_pokemon_sprite(wild_pokemon.species.id, sprite_db, width=48, height=24)
+        if sprite:
+            parts.append(sprite)
+    parts.append(info)
 
     return Panel(
-        content,
+        Group(*parts),
         border_style=f"bold {YELLOW}",
         title="[bold]Wild Encounter![/bold]",
         padding=(1, 2),
     )
 
 
-def render_battle(battle: BattleState, state: GameState, item_db: dict[str, Item] | None = None, art_db: dict[int, str] | None = None) -> Panel:
+def render_battle(battle: BattleState, state: GameState, item_db: dict[str, Item] | None = None, sprite_db: dict[int, str] | None = None) -> Panel:
     """Render the battle screen."""
     opp = battle.opponent_pokemon
     plr = battle.player_pokemon
@@ -461,33 +445,44 @@ def render_battle(battle: BattleState, state: GameState, item_db: dict[str, Item
                                style=RED if pkmn.is_fainted else DIM)
         menu_text.append(f"\n  [ESC] Back", style=DIM)
 
-    # Compose
-    parts = Text()
-    # Opponent art + info
-    if art_db:
-        opp_art = build_pokemon_art(opp.species.id, art_db, max_height=8, max_width=40)
-        if opp_art.plain.strip():
-            parts.append_text(opp_art)
-    parts.append("─── Opponent ───\n", style=BORDER)
-    parts.append_text(opp_info)
-    parts.append("\n\n")
-    # Player art + info
-    if art_db:
-        plr_art = build_pokemon_art(plr.species.id, art_db, max_height=8, max_width=40)
-        if plr_art.plain.strip():
-            parts.append_text(plr_art)
-    parts.append("─── Your Pokemon ───\n", style=BORDER)
-    parts.append_text(plr_info)
-    parts.append("\n\n")
+    # Compose using Group for mixed Text/Pixels renderables
+    group_parts = []
+
+    # Opponent sprite + info
+    if sprite_db:
+        opp_sprite = build_pokemon_sprite(opp.species.id, sprite_db, width=48, height=24)
+        if opp_sprite:
+            group_parts.append(opp_sprite)
+    opp_section = Text()
+    opp_section.append("─── Opponent ───\n", style=BORDER)
+    opp_section.append_text(opp_info)
+    opp_section.append("\n")
+    group_parts.append(opp_section)
+
+    # Player sprite + info
+    if sprite_db:
+        plr_sprite = build_pokemon_sprite(plr.species.id, sprite_db, width=48, height=24)
+        if plr_sprite:
+            group_parts.append(plr_sprite)
+    plr_section = Text()
+    plr_section.append("─── Your Pokemon ───\n", style=BORDER)
+    plr_section.append_text(plr_info)
+    plr_section.append("\n")
+    group_parts.append(plr_section)
+
+    # Messages
     if display_msgs:
-        parts.append_text(msg_text)
-        parts.append("\n")
-    parts.append("─── Actions ───\n", style=BORDER)
-    parts.append_text(menu_text)
+        group_parts.append(msg_text)
+
+    # Action menu
+    action_section = Text()
+    action_section.append("─── Actions ───\n", style=BORDER)
+    action_section.append_text(menu_text)
+    group_parts.append(action_section)
 
     wild_label = "Wild " if battle.is_wild else ""
     return Panel(
-        parts,
+        Group(*group_parts),
         border_style=BORDER,
         title=f"[bold]Battle vs {wild_label}{opp.name}[/bold]",
         padding=(1, 2),
@@ -521,7 +516,7 @@ def render_battle_result(battle: BattleState, xp_gained: int = 0, money_gained: 
     )
 
 
-def render_team(state: GameState, art_db: dict[int, str] | None = None) -> Panel:
+def render_team(state: GameState, sprite_db: dict[int, str] | None = None) -> Panel:
     """Render the team management screen."""
     content = Text()
     content.append(f"  Your Team ({len(state.team)}/6)\n\n", style=f"bold {WHITE}")
@@ -558,18 +553,21 @@ def render_team(state: GameState, art_db: dict[int, str] | None = None) -> Panel
             content.append(f"      [FAINTED]\n", style=RED)
         content.append("\n")
 
-    # Show art for selected Pokemon
-    if art_db and state.team:
-        selected = state.team[state.team_selection]
-        art = build_pokemon_art(selected.species.id, art_db, max_height=12, max_width=45)
-        if art.plain.strip():
-            content.append("─── Preview ───\n", style=BORDER)
-            content.append_text(art)
-
     content.append(f"\n  [UP/DOWN] Select  [S] Swap  [ESC] Back", style=DIM)
 
+    # Build group with optional sprite preview
+    group_parts = [content]
+    if sprite_db and state.team:
+        selected = state.team[state.team_selection]
+        sprite = build_pokemon_sprite(selected.species.id, sprite_db, width=48, height=24)
+        if sprite:
+            preview_label = Text()
+            preview_label.append("\n─── Preview ───\n", style=BORDER)
+            group_parts.append(preview_label)
+            group_parts.append(sprite)
+
     return Panel(
-        content,
+        Group(*group_parts),
         border_style=BORDER,
         title="[bold]Team[/bold]",
         padding=(1, 2),
