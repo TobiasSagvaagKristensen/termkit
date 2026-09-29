@@ -30,8 +30,12 @@ sudo apt install newsboat
 
 ### 1. Install Python dependencies
 
+Create a virtual environment and install the dependencies into it (a plain
+`pip install` fails on Homebrew and other externally-managed Pythons):
+
 ```bash
-pip install -r requirements.txt
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
 ```
 
 ### 2. Configure RSS feeds
@@ -57,10 +61,10 @@ newsboat -x reload
 
 ```bash
 # Newspaper view
-python3 newsboat-newspaper.py
+.venv/bin/python newsboat-newspaper.py
 
 # Ticker (Python)
-python3 newsboat-ticker.py
+.venv/bin/python newsboat-ticker.py
 
 # Ticker (bash)
 ./newsboat-ticker.sh
